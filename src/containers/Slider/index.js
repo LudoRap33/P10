@@ -12,7 +12,7 @@ const Slider = () => {
   );
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
+      () => setIndex(index < (byDateDesc ? byDateDesc.length - 1 : 0) ? index + 1 : 0), // corrigé grâce à une ternaire pour éviter un message d'erreur dans la console
       5000
     );
   };
@@ -22,12 +22,14 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        <div
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${idx}-slider`} // on a corrigé le warning de la key dans la console
+        >
           <div
             key={event.title}
-            className={`SlideCard SlideCard--${
-              index === idx ? "display" : "hide"
-            }`}
+            className={`SlideCard SlideCard--${index === idx ? "display" : "hide"
+              }`}
           >
             <img src={event.cover} alt="forum" />
             <div className="SlideCard__descriptionContainer">
@@ -42,15 +44,17 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`${radioIdx}-bullet`} // on a corrigé le warning de la key dans la console
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  checked={radioIdx === index}
+                  readOnly // pour éviter le warning dans la console
                 />
               ))}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
