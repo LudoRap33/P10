@@ -41,6 +41,13 @@
     -->
   </body>
   <footer>
+
     tier_items = [{id:1, name:'coffee'}, {id:2, name:'tea'}, {id:2, name:'juice'}]
+
+    useEffect(()=>{console.log('tier_items')}, [tier_items])
+
+    const [current, setCurrent] = useState(tier_items) 
+    const [previous, setPrevious] = ???
+    
   </footer>
 </html>
